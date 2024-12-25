@@ -6,7 +6,7 @@ import time
 import os
 
 # 初始化 Web3
-w3 = Web3(Web3.HTTPProvider("https://arbitrum.llamarpc.com"))
+w3 = Web3(Web3.HTTPProvider("https://arbitrum.llamarpc.com"))   # 设置 RPC
 
 # 基础配置
 BASE_URL = "https://api.deform.cc/"
@@ -115,8 +115,7 @@ if __name__ == "__main__":
             response_data = verify_activity(activity_id, token, identity_token, referral_code)
             print(f"钱包 {wallet_address} 的任务完成，结果: {response_data}")
 
-            # 每分钟处理一个地址
-            clear_cache()
+            # 每次处理一个地址后休息 60 秒，避免请求过多
             time.sleep(60)
         except Exception as e:
             print(f"处理钱包 {wallet_address} 时出错: {str(e)}")
