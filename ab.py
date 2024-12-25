@@ -3,6 +3,7 @@ from web3 import Web3
 from eth_account import Account
 from eth_account.messages import encode_defunct
 import time
+import os
 
 # 初始化 Web3
 w3 = Web3(Web3.HTTPProvider("https://arbitrum.llamarpc.com"))
@@ -13,6 +14,11 @@ HEADERS_COMMON = {
     "origin": "https://abstract.deform.cc",
     "referer": "https://abstract.deform.cc/"
 }
+
+# 清理缓存命令
+def clear_cache():
+    os.system("echo 3 > /proc/sys/vm/drop_caches")
+    print("缓存已清理")
 
 # 读取私钥文件
 def load_private_keys(file_path="private_key.txt"):
@@ -110,6 +116,7 @@ if __name__ == "__main__":
             print(f"钱包 {wallet_address} 的任务完成，结果: {response_data}")
 
             # 每分钟处理一个地址
+            clear_cache()
             time.sleep(60)
         except Exception as e:
             print(f"处理钱包 {wallet_address} 时出错: {str(e)}")
